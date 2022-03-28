@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # exclude dataset
-classifier/dataset/*
+classifier/dataset/Par*
