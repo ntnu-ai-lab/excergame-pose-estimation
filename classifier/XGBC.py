@@ -72,9 +72,3 @@ def feature_select(model, model_params, fitter_params, x_train, y_train, x_test,
     leave_one_out(make_xgbc, model_params, fitter_params, dataset_parameters, 'xgbc', selection)
     print('Feature Selection Leave-One-Out', end=' ')
     timer(timer_3)
-
-
-
-# Standard deviation for leave one out
-# Confidence Score
-# Sensitivity Analysis
