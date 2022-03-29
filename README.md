@@ -14,15 +14,15 @@ The dataset directory structure is as follows
     -Par2
         -1
         -2
-            -Par2_Mov1_Iter1_Cam1.mp4
+            -Par2_Mov1_Iter1_Cam1.avi
             ...
-            -Par2_Mov1_Iter1_Cam5.mp4
-            -Par2_Mov1_Iter2_Cam1.mp4
+            -Par2_Mov1_Iter1_Cam5.avi
+            -Par2_Mov1_Iter2_Cam1.avi
             ...
-            -Par2_Mov1_Iter10_Cam5.mp4
-            -Par2_Mov2_Iter1_Cam1.mp4
+            -Par2_Mov1_Iter10_Cam5.avi
+            -Par2_Mov2_Iter1_Cam1.avi
             ...
-            -Par2_Mov17_Iter10_Cam5.mp4
+            -Par2_Mov17_Iter10_Cam5.avi
         -3
         ...
         -17
