@@ -1,22 +1,22 @@
 import warnings
 from xgbc_parameters import dataset_parameters, set_fitter_eval_xgbc
-from misc import timer, evaluations, xgbc_plots, get_f1, get_accuracy
+from misc import timer, xgbc_plots
 from training import train, leave_one_out
-from parameter_search import random_grid, grid_search
 from xgboost import XGBClassifier
 import numpy as np
-from read_data import get_dataset, get_pars
+from read_data import get_dataset
 from sklearn.feature_selection import SelectFromModel
-
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
+# Create XGBC model
 def make_xgbc(model_params={}):
     model = XGBClassifier(tree_method='gpu_hist', verbosity=0, **model_params)
     return model
 
 
+# Train a model and make some training plots. If feature_selection is True, also use model to do feature selection
 def train_and_select(model_params, fitter_params, feature_selection=False):
     x_train, y_train, x_val, y_val, x_test, y_test = get_dataset(**dataset_parameters)
     set_fitter_eval_xgbc(fitter_params, x_train, y_train, x_val, y_val)
@@ -28,9 +28,6 @@ def train_and_select(model_params, fitter_params, feature_selection=False):
     print('Base Model Training', end=' ')
     timer(timer_1)
 
-    # feature_names = get_header()*100
-    # model.get_booster().feature_names = feature_names
-
     # make plots
     xgbc_plots(model)
 
@@ -38,13 +35,13 @@ def train_and_select(model_params, fitter_params, feature_selection=False):
         feature_select(model, model_params, fitter_params, x_train, y_train, x_test, y_test)
 
 
+# Use a trained model to do feature selection
 def feature_select(model, model_params, fitter_params, x_train, y_train, x_test, y_test):
     print('Feature selecting')
     old_features = len(model.feature_importances_)
 
-    threshold = np.sort(model.feature_importances_)[-50:]
-    # print(np.sort(model.feature_importances_)[-1])
-    # print(threshold)
+    # Set a threshold for feature importance
+    threshold = np.sort(model.feature_importances_)[-150:]  # Threshold set to the 150th most important feature
     selection = SelectFromModel(model, threshold=threshold[0], prefit=True)
 
     # Feature select
