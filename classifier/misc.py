@@ -1,11 +1,12 @@
 from datetime import datetime
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay, f1_score
-from xgboost import plot_importance, XGBClassifier
+from xgboost import plot_importance
 from keras.utils.vis_utils import plot_model
 import PATH_CONSTANTS as PATHS
 
 
+# Function used to time other code
 def timer(start_time=None):
     if not start_time:
         start_time = datetime.now()
@@ -24,6 +25,7 @@ def get_f1(y_test, predictions, average='macro'):
     return f1_score(y_test, predictions, average=average)
 
 
+# Calculate F1, accuracy and a confusion matrix from predictions
 def evaluations(y_test, predictions, title='', filename=''):
     if filename != '':
         filename = '_' + filename
@@ -48,6 +50,7 @@ def evaluations(y_test, predictions, title='', filename=''):
     plt.rc('axes', titlesize=10, labelsize=10)
 
 
+# Create plots from XGBC training history and feature importances
 def xgbc_plots(model, filename_tail=''):
     if filename_tail != '':
         filename_tail = '_' + filename_tail
@@ -83,6 +86,7 @@ def xgbc_plots(model, filename_tail=''):
     plt.clf()
 
 
+# Create plots from CNN training history and visualize CNN layers
 def cnn_plots(model, history, filename_tail=''):
     # retrieve performance metrics
     # summarize history for accuracy

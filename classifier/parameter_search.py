@@ -7,6 +7,7 @@ import pandas as pd
 import PATH_CONSTANTS as PATHS
 
 
+# Do random grid search
 def random_grid(model, model_search_params, fitter_params, rand_param_comb=5, folds=5):
     x_train, y_train, x_val, y_val, x_test, y_test = get_dataset(**xparams.dataset_parameters)
     xparams.set_fitter_eval_xgbc(fitter_params, x_train, y_train, x_val, y_val)
@@ -32,12 +33,12 @@ def random_grid(model, model_search_params, fitter_params, rand_param_comb=5, fo
     results.to_csv(PATHS.FIGURES_FOLDER + 'xgb-random-grid-search-results-latest.csv', index=False)
 
 
+# Do grid search
 def grid_search(model, model_search_params, fitter_params, folds=5):
     x_train, y_train, x_val, y_val, x_test, y_test = get_dataset(**xparams.dataset_parameters)
     xparams.set_fitter_eval_xgbc(fitter_params, x_train, y_train, x_val, y_val)
 
     skf = StratifiedKFold(n_splits=folds, shuffle=True, random_state=None)
-    # f1 = f1_score(y_test, predictions, average='macro')
     scorer = make_scorer(f1_score, **{'average': 'macro'})
 
     search_results = GridSearchCV(model, param_grid=model_search_params, scoring=scorer, cv=skf.split(x_train, y_train), verbose=3)

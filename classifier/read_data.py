@@ -1,5 +1,4 @@
 import os
-import random
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -10,8 +9,8 @@ import PATH_CONSTANTS as PATHS
 np.set_printoptions(precision=3, suppress=True)
 
 base_path = PATHS.DATASET_LOCATION
-NORMALIZE_VALUE = 1300
-TOTAL_MOVES = 17
+NORMALIZE_VALUE = 1300  # Max value coordinates can take based on size of image. Adjust as necessary
+TOTAL_MOVES = 17  # Number of different exercises in dataset
 
 
 def get_pars():
@@ -33,6 +32,20 @@ def get_header():
 
 
 def get_dataset(leave_out=[], withhold_moves=[], par_count=None, val_percent=0.1, test_percent=0.1, normalize=False, one_hot=False, flatten=False, verbose=True):
+    """
+    Reads data from disc and processes it according to parameters to provide data in the correct ways for XGBC and CNN models
+
+    @param leave_out: list of participants that will be left out of data set
+    @param withhold_moves: list of moves that will be left out of data set
+    @param par_count: number of participants to include in dataset. Set to None to include all participants
+    @param val_percent: number between 0 and 1 indicating proportion of data used to create validation set
+    @param test_percent: number between 0 and 1 indicating proportion of data used to create test set
+    @param normalize: boolean indicating whether normalization is performed or not
+    @param one_hot: boolean indicating whether labels are one-hot encoded or not
+    @param flatten: boolean indicating whether input matrices are flattened or not
+    @param verbose: boolean turning progress text on or off
+    @return: list containing train, validation and test data
+    """
     dataset_list = []
     test_list = []
     withhold_list = []

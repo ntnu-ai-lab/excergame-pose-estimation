@@ -4,7 +4,6 @@ import cnn_parameters as cp
 import CNN as cnn
 from training import leave_one_out
 from parameter_search import *
-from misc import timer
 
 
 def do_random_grid_search():
