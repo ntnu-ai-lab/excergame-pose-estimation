@@ -4,12 +4,14 @@ import json
 
 # IMPORTANT: this file must be located in and be ran from the openpose installation directory
 # e.g. C:/path/to/installation/openpose
+# This script takes video files, runs OpenPose and creates csv files with joint positions over time
 
 # Paths
+# \\ is directory separator for windows
 openpose_path = r'D:\Master\openpose'
-source_folder = r'[INSERT_PATH]' + '\\'  # Root directory of dataset, e.g. C:/path/to/directory/dataset/
+source_folder = r'[INSERT_PATH]' + '\\'  # Root directory of video dataset, e.g. C:/path/to/directory/dataset/
 temp_json = r'.\temp_json' + '\\'  # Temporary directory for json objects
-csv_dest = r'[INSERT_PATH]' + '\\'  # Directory of resulting csv files, e.g. C:/path/to/directory/csv_output
+csv_dest = r'[INSERT_PATH]' + '\\'  # Directory of final csv files, e.g. C:/path/to/directory/csv_output
 
 # Other strings
 DELETE_CONTENTS = r'del /Q /S '  # Command to delete contents of a folder, adjust as necessary
@@ -32,7 +34,7 @@ def main():
         # Create folder for csv files
         csv_path = csv_dest + par
 
-        # Check if this par is already done
+        # Check if this participant is already done
         try:
             if len(cam5_vids) == len(os.listdir(csv_path)):
                 print(par + ' done')
@@ -41,7 +43,8 @@ def main():
             pass
         
         print(par + ' in progress...')
-        
+
+        # Create output directory for csv files
         try:
             os.mkdir(csv_path)
         except FileExistsError:
@@ -50,7 +53,7 @@ def main():
             os.mkdir(csv_path)
 
         for vid in cam5_vids:
-            # Delete contents of temporary folder
+            # Delete old contents of temporary folder
             os.system(DELETE_CONTENTS + temp_json)
             
             vid_source = par_path + vid
@@ -76,7 +79,7 @@ def main():
                 data = json.load(g)
                 person = data['people'][0]['pose_keypoints_2d']  # Get keypoints for the person
                 
-                # Remove every third element (the ones that are not coords) and write data to csv
+                # Remove every third element (which are not coords) and write data to csv file
                 del person[2::3]
                 writer.writerow(person)
                 
