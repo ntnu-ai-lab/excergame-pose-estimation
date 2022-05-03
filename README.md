@@ -1,7 +1,7 @@
 # excergame-pose-estimation
 
-The openpose folder represents the folder where your OpenPose installation lies 
-(the folder that contains build/ cmake/ and so on). The python scripts that folder 
+The repo directory named "openpose" represents the folder where your OpenPose installation lies 
+(the folder that contains build/ cmake/ and so on). The python scripts in that directory 
 must be run from said openpose installation folder. For information on how to install
 and use OpenPose, see https://github.com/CMU-Perceptual-Computing-Lab/openpose
 
